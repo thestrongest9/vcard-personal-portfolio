@@ -1879,31 +1879,6 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .timeline-text { max-width: 700px; }
 
-  /* Pagination links */
-  .pagination {
-    text-align: center;
-    margin-top: 2rem;
-  }
-
-  .pagination a {
-      color: #007BFF;
-      padding: 8px 16px;
-      text-decoration: none;
-      border: 1px solid #007BFF;
-      margin: 0 5px;
-      border-radius: 4px;
-  }
-
-  .pagination a:hover {
-      background-color: #007BFF;
-      color: white;
-  }
-
-  .pagination .active {
-      background-color: #007BFF;
-      color: white;
-  }
-
   .card-container {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -1926,9 +1901,38 @@ textarea.form-input::-webkit-resizer { display: none; }
     border-radius: 10px;
 }
 
-#page-numbers {
-  margin-top: 20px;
-  font-size: 16px;
+
 }
 
+/* NOTE: Pagination Code, (highly modifed) from this:
+https://www.geeksforgeeks.org/create-a-pagination-using-html-css-and-javascript/ */
+/* Pagination links */
+.pagination {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.pagination a {
+    color: #007BFF;
+    padding: 8px 16px;
+    text-decoration: none;
+    border: 1px solid #007BFF;
+    margin: 0 5px;
+    border-radius: 4px;
+}
+
+.pagination a:hover {
+    background-color: #007BFF;
+    color: white;
+}
+
+.pagination .active {
+    background-color: #007BFF;
+    color: white;
+}
+
+#page-numbers {
+  color: #007BFF !important;
+  margin-top: 20px;
+  font-size: 16px;
 }
