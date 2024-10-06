@@ -37,9 +37,24 @@ function displayPage(page) {
 // Function to update pagination buttons and page numbers 
 function updatePagination() { 
     pageNumbers.textContent = 
-        `Page ${currentPage} of ${totalPages}`; 
-    prevButton.disabled = currentPage === 1; 
+        `Page ${currentPage} of ${totalPages}`; //display number of pages
+    
+    
+    prevButton.disabled = currentPage === 1;  
+    if (prevButton.disabled == true) { //disable previous button if no previous pages exist
+      prevButton.style.display = 'none';
+    } else {
+      prevButton.style.display = 'block';
+    }
+
     nextButton.disabled = currentPage === totalPages; 
+    if (nextButton.disabled == true) { //disable next button if no next page exists
+      nextButton.style.display = 'none';
+    } else {
+      nextButton.style.display = 'block';
+    }
+
+
     pageLinks.forEach((link) => { 
         const page = parseInt(link.getAttribute('data-page')); 
         link.classList.toggle('active', page === currentPage); 
