@@ -90,7 +90,7 @@ https://www.geeksforgeeks.org/create-a-pagination-using-html-css-and-javascript/
                 </p>
 
                 <center>
-                    <img src="../assets/images/pathfinding/collision.png" width="1000px">
+                    <img src="../assets/images/pathfinding/collision.png" width="800px">
                     <p>
                         <font size="1">
                             Units colliding into each other trying to reach the same grid position.
@@ -126,9 +126,90 @@ https://www.geeksforgeeks.org/create-a-pagination-using-html-css-and-javascript/
                     2) Adjust (negatively) grid values where units are stationed. Ideally this would reinforce
                     the A* algorithm to avoid positions containing other units. 
                     <br>
+                    3) Recaclulate the A* path when possible.
+                    <br>
                     Now this did help somewhat, and you can see in the image above that it allows
                     for multiple units to coordinate and not get stuck on each other. 
+                </p>
 
+                <center>
+                    <img src="../assets/images/pathfinding/bad_pathfinding_2.png" width="400">
+                    <p>
+                        <font size="1">
+                            Still there are issues. 
+                        </font>
+                    </p>
+                </center>
+                <p>
+                    Even with those improvements occasionally still issues popped up. A* get the 
+                    optimal path ultimately meant that it was likely that many units would share the
+                    same path. The collision problem was still there then.
+                </p>
+
+                <center>
+                    <video controls>
+                        <source src="../assets/images/pathfinding/flowfield_in_action.webm" type="video/webm" />
+                    </video>
+                    <p>
+                        <font size="1">
+                            Flowfield Pathfinding. The camera is zoomed out.
+                        </font>
+                    </p>
+                </center>
+                <p>
+                    This had lead me to my most recent development: flowfield pathfinding.
+                    Previously I had attempted to adjust A* in as many ways as possible to
+                    account for it's collision issues. However, there are more pathfinding algorithms
+                    out there other than A*. Flowfields are used in RTS games where multiple units
+                    have to move together in tandem. 
+                </p>
+                <p>
+                    In the above video I have implemented flowfield pathfinding within the grid. Each
+                    grid cell points to the next tile that allows a moving unit to get closer to the target.
+                    There are also many other small adjustments happening in the background (such as a slight
+                    bias towards the center of tiles so that the moving enemy does not collide against walls.),
+                    but because no matter where the enemy is located there is always a given direction it can move in.
+                    Therefore, even when enemies are crowded together, they all still move in the same general
+                    direction given by the tile it is closest to. This helps alleviate the crowding issue. 
+                    Admittedly, it does have a larger performance cost than A* (since it needs to calculate values
+                    for all tiles). But good memory management and multithreading help to lessen these problems.
+                </p>
+
+                <center>
+                    <img src="../assets/images/pathfinding/game_screenshot.png" width="600">
+                    <p>
+                        <font size="1">
+                            Not perfect, but better. 
+                        </font>
+                    </p>
+                </center>
+                <p>
+                    It seems like pathfinding is a very case dependent problem with no good solutions.
+                    For now, this is all I've done for my current game.
+                </p>
+
+                <h3 class="h3 article-title">Extras</h3>
+
+                <center>
+                    <video controls width="800">
+                        <source src="../assets/images/pathfinding/3d_pathfinding.webm" type="video/webm" />
+                    </video>
+                    <p>
+                        <font size="1">
+                            Flowfield Pathfinding. The camera is zoomed out.
+                        </font>
+                    </p>
+                </center>
+                <p>
+                    <font size="2">
+                    I've also done some 3D mesh-based pathfinding. The above video shows a 3D pathfinding algorithm with
+                    that adjusts on the fly (but is very expensive). Essentially, a script checks at evenly spaced points
+                    on top of the mesh with spherecasts to see if there are collisions. Then it receives all the points without
+                    collisions and runs an A* algorithm on those points. Finally, it gives the path to the enemy which moves towards the player, as seen above.
+                    <br>
+                    <br>
+                    Note: Last few seconds of the video demonstrate a save system I was working on.
+                    </font>
                 </p>
 
                 </section>
