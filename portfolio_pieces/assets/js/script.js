@@ -3,7 +3,7 @@
 var linked = false;
 
 //script.js 
-const cardsPerPage = 4; // Number of cards to show per page 
+const cardsPerPage = 1; // Number of cards to show per page 
 const dataContainer = document.getElementById('data-container'); 
 const pagination = document.getElementById('pagination'); 
 const prevButton = document.getElementById('prev'); 
@@ -26,7 +26,7 @@ function displayPage(page) {
     // print(cards)
     // console.log(cards)
     cards.forEach((card, index) => {
-        console.log("HERE") 
+        // console.log("HERE") 
         if (index >= startIndex && index < endIndex) { 
             card.style.display = 'block'; 
         } else { 
@@ -122,7 +122,7 @@ function getID(url) {
   return matches[1]
 }
 
-console.log("[",getID(url),"]");
+// console.log("[",getID(url),"]");
 
 function display_linked_post_only(linked_to) {
   cards.forEach((card, index) => {
@@ -132,6 +132,7 @@ function display_linked_post_only(linked_to) {
         card.style.display = 'none'; 
       }
   }); 
+  seeAllButton.style.display = 'block'
 }
 
 
@@ -141,17 +142,20 @@ const post_id = getID(url);
 var linked_to = document.getElementById(post_id);
 // console.log(linked_to);
 // display_linked_posts_only(linked_to);
-if (linked_to != null) {
+if (post_id != null) {
   linked = true;
 }
 
+// console.log("HERE: ",linked_to)
 
-console.log(linked);
+// console.log(linked);
 // Initial page load 
 if (linked == false) {
+  // console.log("WOW2")
   displayPage(currentPage); 
-  updatePagination();
+  updatePagination(linked);
 } else {
+  // console.log("WOW")
   display_linked_post_only(linked_to);
   updatePagination(linked);
 }
