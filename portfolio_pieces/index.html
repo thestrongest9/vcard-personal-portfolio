@@ -38,23 +38,99 @@ https://www.geeksforgeeks.org/create-a-pagination-using-html-css-and-javascript/
                 </header>
         
                 <section>
-                <p>
+                <!-- <p>
                     A good amount of my time has been spent on working out pathfinding
                     in games. 
+                </p> -->
+                
+                <p>
+                    One of the most important (and often neglected) elements in video games is
+                    pathfinding. How enemies and NPCs move relative to the player and to other 
+                    points of interest greatly effects gameplay. 
+                    
+                    If you really think about it, most games these days are really about being
+                    in the right place at the right time. Whether that be some FPS game like Apex
+                    or a third-person action RPG like Dark Souls, both these games require you to
+                    move (position yourself) such that your attacks can be the most effective.
+                    
+                    Positioning is important. Movement is important. Thus, pathfinding is too. 
+                </p>
+
+                <center>
+                    <video controls>
+                        <source src="../assets/images/pathfinding/bad_pathfinding.webm" type="video/webm" />
+                    </video>
+                    <p>
+                        <font size="1">
+                            Grid-based A* in Unity.
+                        </font>
+                    </p>
+                </center>
+
+                <p>
+                    When I started working on my most recent game (which I refer to as "Project Circle"),
+                    one of the first problems I encountered was how to make enemies actually go to the player.
+                    
+                    Initially, when I first started the game in Unity, I tried using Unity's 2D A* implementation,
+                    but found out that it did not suit my particular needs. It did not account for new obstacles 
+                    in the manner I wanted and thus, I created my own A* implementation.
+                    
+                    During this time I figured out that working in a discrete environment was very helpful
+                    for pathfinding algorithms compared to working in a continous environment. This is because
+                    discrete environments allow you cut up spaces into sections that are easier to calculate
+                    values for, thus making pathfinding much more easier. This is the reson why my game is
+                    sectioned into grid-spaces.
                 </p>
                 
-                <img src="../assets/images/pathfinding/multi_unit_pathfinding.gif">
                 <p>
-                    <font size="1">
-                        Above: Multi-unit pathfinding.
-                    </font>
+                    When I later moved to Godot 4.0 I initially used Godot's A* implementation. Godot's
+                    built-in implementation did not use 2D navmeshes like Unity's and all I had to do was 
+                    feed it grid-based positional data. This worked well enough, however, there were a lot of
+                    issues.
                 </p>
 
-
+                <center>
+                    <img src="../assets/images/pathfinding/collision.png" width="1000px">
+                    <p>
+                        <font size="1">
+                            Units colliding into each other trying to reach the same grid position.
+                        </font>
+                    </p>
+                </center>
 
                 <p>
-                    Other than game development, I also work with AI (OpenAI Gymnasium, Stable Baselines 3).
+                    Overlapping position were a big headache (that I'm not sure that I have completely solved yet).
+                    In the image above you can see two units colliding into each other. The reason for this is because
+                    their code tells them that they need to go to a certain tile to go down the optimal route that the
+                    A* algorithm has given them. Only the problem here is that sometimes the optimal route for two units
+                    contains many of the same positions. Thus, there is an issue where units "crowd" an area, making all
+                    units stuck at that position. 
                 </p>
+
+                <center>
+                    <img src="../assets/images/pathfinding/multi_unit_pathfinding.gif">
+                    <p>
+                        <font size="1">
+                            Multi-unit pathfinding. With modified A*.
+                        </font>
+                    </p>
+                </center>
+                <p>
+                    My first solution was to have units check two things:
+                    <br>
+                    1) That there are no other units on the first tile it starts it's pathfinding from.
+                    And also that there are no other units on the way to that starting tile. 
+                    This was done via storing all Unit's current positions in a singleton and using raycasts to check
+                    the first starting positions.
+                    <br>
+                    2) Adjust (negatively) grid values where units are stationed. Ideally this would reinforce
+                    the A* algorithm to avoid positions containing other units. 
+                    <br>
+                    Now this did help somewhat, and you can see in the image above that it allows
+                    for multiple units to coordinate and not get stuck on each other. 
+
+                </p>
+
                 </section>
             </div>
 
