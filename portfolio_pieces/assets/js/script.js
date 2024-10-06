@@ -1,6 +1,6 @@
 'use strict';
 
-
+var linked = false;
 
 //script.js 
 const cardsPerPage = 4; // Number of cards to show per page 
@@ -8,6 +8,7 @@ const dataContainer = document.getElementById('data-container');
 const pagination = document.getElementById('pagination'); 
 const prevButton = document.getElementById('prev'); 
 const nextButton = document.getElementById('next'); 
+const seeAllButton = document.getElementById('see_all');
 const pageNumbers = document.getElementById('page-numbers'); 
 const pageLinks = document.querySelectorAll('.page-link'); 
 
@@ -35,7 +36,14 @@ function displayPage(page) {
 } 
 
 // Function to update pagination buttons and page numbers 
-function updatePagination() { 
+function updatePagination(linked=false) {
+    if (linked) {
+      prevButton.style.display = 'none';
+      nextButton.style.display = 'none';
+      return;
+    } else {
+      seeAllButton.style.display = 'none';
+    }
     pageNumbers.textContent = 
         `Page ${currentPage} of ${totalPages}`; //display number of pages
     
@@ -79,6 +87,12 @@ nextButton.addEventListener('click', () => {
     } 
 }); 
 
+seeAllButton.addEventListener('click', () => {
+    linked = false;
+    displayPage(currentPage); 
+    updatePagination(); 
+});
+
 // Event listener for page number buttons 
 pageLinks.forEach((link) => { 
     link.addEventListener('click', (e) => { 
@@ -92,6 +106,52 @@ pageLinks.forEach((link) => {
     }); 
 }); 
 
+
+
+//On initial page load, check if there is ID being linked to
+//Then open only that ID, in a special page that can lead back to
+//The rest of the blog
+const url = document.URL;
+// const url = "http://127.0.0.1:3000/portfolio_pieces/index.html#about5";
+function getID(url) {
+  var rexep = /#(.*)/;
+  var matches = url.match(rexep);
+  if (matches == null) {
+    return "null";
+  }
+  return matches[1]
+}
+
+console.log("[",getID(url),"]");
+
+function display_linked_post_only(linked_to) {
+  cards.forEach((card, index) => {
+      if (card == linked_to) { 
+        card.style.display = 'block'; 
+      } else { 
+        card.style.display = 'none'; 
+      }
+  }); 
+}
+
+
+
+const post_id = getID(url);
+//Display only certain pages based on ID
+var linked_to = document.getElementById(post_id);
+// console.log(linked_to);
+// display_linked_posts_only(linked_to);
+if (linked_to != null) {
+  linked = true;
+}
+
+
+console.log(linked);
 // Initial page load 
-displayPage(currentPage); 
-updatePagination();
+if (linked == false) {
+  displayPage(currentPage); 
+  updatePagination();
+} else {
+  display_linked_post_only(linked_to);
+  updatePagination(linked);
+}
