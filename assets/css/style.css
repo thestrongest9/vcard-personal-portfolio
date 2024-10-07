@@ -129,6 +129,7 @@ a { text-decoration: none; }
 
 li { list-style: none; }
 
+/* img, ion-icon, a, button, time, span { display: block; } */
 img, ion-icon, a, button, time, span { display: block; }
 
 button {
@@ -292,6 +293,21 @@ article.active {
   z-index: -1;
 }
 
+.box {
+  /* width: 200px;
+  height: 100px; */
+  /* background-color: lightblue; */
+  
+  /* border: 2px solid blue; */
+  background: var(--eerie-black-2);
+  border: 3px solid var(--jet);
+  border-radius: 20px;
+  padding: 15px;
+  box-shadow: var(--shadow-1);
+  z-index: 1;
+  padding: 10px;
+  margin: 10px;
+}
 
 
 
@@ -1251,8 +1267,9 @@ textarea.form-input::-webkit-resizer { display: none; }
   .blog-banner-box { 
     /* controls box size scaling in portfolio section  */
     /* height: auto;  */
-    height: "100px";
-    width: "100px";
+    /* height: "100px";
+    width: "100px"; */
+    scale:100%;
   }
 
 }
