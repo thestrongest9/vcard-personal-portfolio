@@ -1248,7 +1248,12 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .project-img,
-  .blog-banner-box { height: auto; }
+  .blog-banner-box { 
+    /* controls box size scaling in portfolio section  */
+    /* height: auto;  */
+    height: "100px";
+    width: "100px";
+  }
 
 }
 
